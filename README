@@ -1,0 +1,66 @@
+Rquerypad
+=========
+Simplify query options with association automation and improve inner join for activerecord of rails
+
+Feature
+=======
+1. single name string decribe associations
+2. support to mix inner join and outer join with any order
+3. auto remove duplicated joins from other association in different depth
+4. support :conditions, :order, :group
+5. auto merge to original :include, :joins
+
+Install
+=======
+ruby script/plugin install http://rquerypad.rubyforge.org/svn/trunk/rquerypad
+or
+ruby script/plugin install http://rquerypad.googlecode.com/svn/trunk/rquerypad
+
+Example
+=======
+suppose the asscociations of User <-> Thread <-> Reply is 1:N:N
+
+@users = User.find(:all, :group => ["threads.created_at", "name"])
+generate:
+[:all, {:group=>"threads.created_at, users.name", :include=>[:threads]}]
+
+@users = User.find(:all, :conditions => ["threads_.replies.title = ?", "rquerypad"])
+generate:
+[:all, {:inner_joins=>["threads"], :conditions=>["replies.title = ?", "rquerypad"], :include=>[{:threads=>:replies}]}]
+#note: the :inner_joints is processed by rquerypad before sending sql to database
+
+@users = User.find(:all, :conditions => ["threads.replies.title = ? and threads.id = ?", "rquerypad", 1])
+generate:
+[:all, {:conditions=>["replies.title = ? and threads.id = ?", "rquerypad", 1], :include=>[{:threads=>:replies}]}]
+#note: single "threads" was removed from includes
+
+Setup
+=======
+#to set debug model, in rails initialized script
+$RQUERYPAD_DEBUG = true
+
+Test
+=======
+Note: current migrate script works only in rails 2.0 or later
+
+1.Prepare
+
+the test depends on sqlite3 database, the following code should be add into your database.yml and place rquerypad.rb(copy from test.rb) in config/environment
+
+rquerypad:
+  adapter: sqlite3
+  database: vendor/plugins/rquerypad/test/db.rquerypad
+  timeout: 5000
+  
+2.database migrate
+
+execute the following script
+
+rake migrate
+
+3.start test
+
+execute the following script
+rake
+
+Copyright (c) 2008 Leon Li, released under the MIT license

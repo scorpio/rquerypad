@@ -1,0 +1,25 @@
+reply_one:
+  id: 1
+  title: "rquerypad"
+  forum_thread_id: 1
+  user_id: 1
+  
+reply_two:
+  id: 2
+  title: "thank you"
+  forum_thread_id: 2
+  user_id: 2
+  
+reply_three:
+  id: 3
+  title: "thank you-1"
+  forum_thread_id: 2
+  parent_id: 2
+  user_id: 2
+
+reply_four:
+  id: 4
+  title: "thank you-2"
+  forum_thread_id: 2
+  parent_id: 2
+  user_id: 2
