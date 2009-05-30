@@ -12,9 +12,7 @@ Feature
 
 Install
 =======
-ruby script/plugin install http://rquerypad.rubyforge.org/svn/trunk/rquerypad
-or
-ruby script/plugin install http://rquerypad.googlecode.com/svn/trunk/rquerypad
+script/plugin install git://github.com/scorpio/rquerypad.git 
 
 Example
 =======
